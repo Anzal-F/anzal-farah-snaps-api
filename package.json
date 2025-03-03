@@ -18,5 +18,8 @@
     "url": "https://github.com/Anzal-F/anzal-farah-snaps-api/issues"
   },
   "homepage": "https://github.com/Anzal-F/anzal-farah-snaps-api#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }

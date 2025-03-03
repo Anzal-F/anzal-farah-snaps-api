@@ -28,5 +28,11 @@ router.get("/:id", (req, res) => {
     photo ? res.json(photo) : res.status(404).json({ error: "Photo not found" });
   });
 
+  // GET /photos/:id/comments for Returning comments for a photo
+router.get("/:id/comments", (req, res) => {
+    const photos = readPhotos();
+    const photo = photos.find((p) => p.id === req.params.id);
+    photo ? res.json(photo.comments) : res.status(404).json({ error: "Photo not found" });
+  });
 
 export default router;

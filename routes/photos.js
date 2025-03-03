@@ -35,4 +35,27 @@ router.get("/:id/comments", (req, res) => {
     photo ? res.json(photo.comments) : res.status(404).json({ error: "Photo not found" });
   });
 
+
+  // POST /photos/:id/comments for Adding a new comment
+router.post("/:id/comments", (req, res) => {
+    const { name, comment } = req.body;
+    if (!name || !comment) return res.status(400).json({ error: "Name and comment are required" });
+  
+    const photos = readPhotos();
+    const photo = photos.find((p) => p.id === req.params.id);
+    if (!photo) return res.status(404).json({ error: "Photo not found" });
+  
+    const newComment = { id: Date.now().toString(), name, comment, timestamp: Date.now() };
+    photo.comments.push(newComment);
+
+ // Saving the new updated data
+  try {
+    fs.writeFileSync(photosFilePath, JSON.stringify(photos, null, 2));
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error("Error saving comment:", error);
+    res.status(500).json({ error: "Failed to save comment" });
+  }
+});
+
 export default router;

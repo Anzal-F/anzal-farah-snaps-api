@@ -21,5 +21,12 @@ router.get("/", (_req, res) => {
   res.json(photos);
 });
 
+// GET /photos/:id for Returning a single photo by ID
+router.get("/:id", (req, res) => {
+    const photos = readPhotos();
+    const photo = photos.find((p) => p.id === req.params.id);
+    photo ? res.json(photo) : res.status(404).json({ error: "Photo not found" });
+  });
+
 
 export default router;
